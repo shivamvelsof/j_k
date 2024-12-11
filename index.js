@@ -8,5 +8,8 @@ $(document).ready(function () {
     } else {
       $("#sdg-rotating-wheel-handler").removeClass("show-rotating-wheel");
     }
+    if (btnValue === "sdg_india_index") {
+        window.location.href = "comparison.html";
+    }
   });
 });
