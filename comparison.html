@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>SDG J&amp;K - Dashboard</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="http://159.89.166.77/sdg_jk/assets/images/favicon.ico" />
+
+    <!-- Hope Ui Design System Css -->
+    <link rel="stylesheet" href="http://159.89.166.77/sdg_jk/assets/css/hope-ui.min.css?v=2.0.0" />
+
+    <!-- Customizer Css -->
+    <link rel="stylesheet" href="http://159.89.166.77/sdg_jk/assets/css/customizer.min.css" />
+
+    <!-- Main Css -->
+    <link rel="stylesheet" href="http://159.89.166.77/sdg_jk/assets/css/index.css" />
+
+    <!-- Dashboard Page Css -->
+    <link rel="stylesheet" href="http://159.89.166.77/sdg_jk/assets/css/dashboard.css" />
+
+    <link rel="stylesheet" href="http://159.89.166.77/sdg_jk/assets/css/common-public-pages.css" />
+    <link rel='stylesheet' type='text/css' property='stylesheet'
+        href='/sdg_jk/_debugbar/assets/stylesheets?v=1712920837&theme=auto' data-turbolinks-eval='false'
+        data-turbo-eval='false'>
+    <script src='/sdg_jk/_debugbar/assets/javascript?v=1712920837' data-turbolinks-eval='false'
+        data-turbo-eval='false'></script>
+    <script data-turbo-eval='false'>jQuery.noConflict(true);</script>
+    <script> Sfdump = window.Sfdump || (function (doc) { doc.documentElement.classList.add('sf-js-enabled'); var rxEsc = /([.*+?^${}()|\[\]\/\\])/g, idRx = /\bsf-dump-\d+-ref[012]\w+\b/, keyHint = 0 <= navigator.platform.toUpperCase().indexOf('MAC') ? 'Cmd' : 'Ctrl', addEventListener = function (e, n, cb) { e.addEventListener(n, cb, false); }; if (!doc.addEventListener) { addEventListener = function (element, eventName, callback) { element.attachEvent('on' + eventName, function (e) { e.preventDefault = function () { e.returnValue = false; }; e.target = e.srcElement; callback(e); }); }; } function toggle(a, recursive) { var s = a.nextSibling || {}, oldClass = s.className, arrow, newClass; if (/\bsf-dump-compact\b/.test(oldClass)) { arrow = '▼'; newClass = 'sf-dump-expanded'; } else if (/\bsf-dump-expanded\b/.test(oldClass)) { arrow = '▶'; newClass = 'sf-dump-compact'; } else { return false; } if (doc.createEvent && s.dispatchEvent) { var event = doc.createEvent('Event'); event.initEvent('sf-dump-expanded' === newClass ? 'sfbeforedumpexpand' : 'sfbeforedumpcollapse', true, false); s.dispatchEvent(event); } a.lastChild.innerHTML = arrow; s.className = s.className.replace(/\bsf-dump-(compact|expanded)\b/, newClass); if (recursive) { try { a = s.querySelectorAll('.' + oldClass); for (s = 0; s < a.length; ++s) { if (-1 == a[s].className.indexOf(newClass)) { a[s].className = newClass; a[s].previousSibling.lastChild.innerHTML = arrow; } } } catch (e) { } } return true; }; function collapse(a, recursive) { var s = a.nextSibling || {}, oldClass = s.className; if (/\bsf-dump-expanded\b/.test(oldClass)) { toggle(a, recursive); return true; } return false; }; function expand(a, recursive) { var s = a.nextSibling || {}, oldClass = s.className; if (/\bsf-dump-compact\b/.test(oldClass)) { toggle(a, recursive); return true; } return false; }; function collapseAll(root) { var a = root.querySelector('a.sf-dump-toggle'); if (a) { collapse(a, true); expand(a); return true; } return false; } function reveal(node) { var previous, parents = []; while ((node = node.parentNode || {}) && (previous = node.previousSibling) && 'A' === previous.tagName) { parents.push(previous); } if (0 !== parents.length) { parents.forEach(function (parent) { expand(parent); }); return true; } return false; } function highlight(root, activeNode, nodes) { resetHighlightedNodes(root); Array.from(nodes || []).forEach(function (node) { if (!/\bsf-dump-highlight\b/.test(node.className)) { node.className = node.className + ' sf-dump-highlight'; } }); if (!/\bsf-dump-highlight-active\b/.test(activeNode.className)) { activeNode.className = activeNode.className + ' sf-dump-highlight-active'; } } function resetHighlightedNodes(root) { Array.from(root.querySelectorAll('.sf-dump-str, .sf-dump-key, .sf-dump-public, .sf-dump-protected, .sf-dump-private')).forEach(function (strNode) { strNode.className = strNode.className.replace(/\bsf-dump-highlight\b/, ''); strNode.className = strNode.className.replace(/\bsf-dump-highlight-active\b/, ''); }); } return function (root, x) { root = doc.getElementById(root); var indentRx = new RegExp('^(' + (root.getAttribute('data-indent-pad') || ' ').replace(rxEsc, '\\$1') + ')+', 'm'), options = { "maxDepth": 1, "maxStringLength": 160, "fileLinkFormat": false }, elt = root.getElementsByTagName('A'), len = elt.length, i = 0, s, h, t = []; while (i < len) t.push(elt[i++]); for (i in x) { options[i] = x[i]; } function a(e, f) { addEventListener(root, e, function (e, n) { if ('A' == e.target.tagName) { f(e.target, e); } else if ('A' == e.target.parentNode.tagName) { f(e.target.parentNode, e); } else { n = /\bsf-dump-ellipsis\b/.test(e.target.className) ? e.target.parentNode : e.target; if ((n = n.nextElementSibling) && 'A' == n.tagName) { if (!/\bsf-dump-toggle\b/.test(n.className)) { n = n.nextElementSibling || n; } f(n, e, true); } } }); }; function isCtrlKey(e) { return e.ctrlKey || e.metaKey; } function xpathString(str) { var parts = str.match(/[^'"]+|['"]/g).map(function (part) { if ("'" == part) { return '"\'"'; } if ('"' == part) { return "'\"'"; } return "'" + part + "'"; }); return "concat(" + parts.join(",") + ", '')"; } function xpathHasClass(className) { return "contains(concat(' ', normalize-space(@class), ' '), ' " + className + " ')"; } a('mouseover', function (a, e, c) { if (c) { e.target.style.cursor = "pointer"; } }); a('click', function (a, e, c) { if (/\bsf-dump-toggle\b/.test(a.className)) { e.preventDefault(); if (!toggle(a, isCtrlKey(e))) { var r = doc.getElementById(a.getAttribute('href').slice(1)), s = r.previousSibling, f = r.parentNode, t = a.parentNode; t.replaceChild(r, a); f.replaceChild(a, s); t.insertBefore(s, r); f = f.firstChild.nodeValue.match(indentRx); t = t.firstChild.nodeValue.match(indentRx); if (f && t && f[0] !== t[0]) { r.innerHTML = r.innerHTML.replace(new RegExp('^' + f[0].replace(rxEsc, '\\$1'), 'mg'), t[0]); } if (/\bsf-dump-compact\b/.test(r.className)) { toggle(s, isCtrlKey(e)); } } if (c) { } else if (doc.getSelection) { try { doc.getSelection().removeAllRanges(); } catch (e) { doc.getSelection().empty(); } } else { doc.selection.empty(); } } else if (/\bsf-dump-str-toggle\b/.test(a.className)) { e.preventDefault(); e = a.parentNode.parentNode; e.className = e.className.replace(/\bsf-dump-str-(expand|collapse)\b/, a.parentNode.className); } }); elt = root.getElementsByTagName('SAMP'); len = elt.length; i = 0; while (i < len) t.push(elt[i++]); len = t.length; for (i = 0; i < len; ++i) { elt = t[i]; if ('SAMP' == elt.tagName) { a = elt.previousSibling || {}; if ('A' != a.tagName) { a = doc.createElement('A'); a.className = 'sf-dump-ref'; elt.parentNode.insertBefore(a, elt); } else { a.innerHTML += ' '; } a.title = (a.title ? a.title + '\n[' : '[') + keyHint + '+click] Expand all children'; a.innerHTML += elt.className == 'sf-dump-compact' ? '<span>▶</span>' : '<span>▼</span>'; a.className += ' sf-dump-toggle'; x = 1; if ('sf-dump' != elt.parentNode.className) { x += elt.parentNode.getAttribute('data-depth') / 1; } } else if (/\bsf-dump-ref\b/.test(elt.className) && (a = elt.getAttribute('href'))) { a = a.slice(1); elt.className += ' sf-dump-hover'; elt.className += ' ' + a; if (/[\[{]$/.test(elt.previousSibling.nodeValue)) { a = a != elt.nextSibling.id && doc.getElementById(a); try { s = a.nextSibling; elt.appendChild(a); s.parentNode.insertBefore(a, s); if (/^[@#]/.test(elt.innerHTML)) { elt.innerHTML += ' <span>▶</span>'; } else { elt.innerHTML = '<span>▶</span>'; elt.className = 'sf-dump-ref'; } elt.className += ' sf-dump-toggle'; } catch (e) { if ('&' == elt.innerHTML.charAt(0)) { elt.innerHTML = '…'; elt.className = 'sf-dump-ref'; } } } } } if (doc.evaluate && Array.from && root.children.length > 1) { root.setAttribute('tabindex', 0); SearchState = function () { this.nodes = []; this.idx = 0; }; SearchState.prototype = { next: function () { if (this.isEmpty()) { return this.current(); } this.idx = this.idx < (this.nodes.length - 1) ? this.idx + 1 : 0; return this.current(); }, previous: function () { if (this.isEmpty()) { return this.current(); } this.idx = this.idx > 0 ? this.idx - 1 : (this.nodes.length - 1); return this.current(); }, isEmpty: function () { return 0 === this.count(); }, current: function () { if (this.isEmpty()) { return null; } return this.nodes[this.idx]; }, reset: function () { this.nodes = []; this.idx = 0; }, count: function () { return this.nodes.length; }, }; function showCurrent(state) { var currentNode = state.current(), currentRect, searchRect; if (currentNode) { reveal(currentNode); highlight(root, currentNode, state.nodes); if ('scrollIntoView' in currentNode) { currentNode.scrollIntoView(true); currentRect = currentNode.getBoundingClientRect(); searchRect = search.getBoundingClientRect(); if (currentRect.top < (searchRect.top + searchRect.height)) { window.scrollBy(0, -(searchRect.top + searchRect.height + 5)); } } } counter.textContent = (state.isEmpty() ? 0 : state.idx + 1) + ' of ' + state.count(); } var search = doc.createElement('div'); search.className = 'sf-dump-search-wrapper sf-dump-search-hidden'; search.innerHTML = ' <input type="text" class="sf-dump-search-input"> <span class="sf-dump-search-count">0 of 0<\/span> <button type="button" class="sf-dump-search-input-previous" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"\/><\/svg> <\/button> <button type="button" class="sf-dump-search-input-next" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"\/><\/svg> <\/button> '; root.insertBefore(search, root.firstChild); var state = new SearchState(); var searchInput = search.querySelector('.sf-dump-search-input'); var counter = search.querySelector('.sf-dump-search-count'); var searchInputTimer = 0; var previousSearchQuery = ''; addEventListener(searchInput, 'keyup', function (e) { var searchQuery = e.target.value; /* Don't perform anything if the pressed key didn't change the query */ if (searchQuery === previousSearchQuery) { return; } previousSearchQuery = searchQuery; clearTimeout(searchInputTimer); searchInputTimer = setTimeout(function () { state.reset(); collapseAll(root); resetHighlightedNodes(root); if ('' === searchQuery) { counter.textContent = '0 of 0'; return; } var classMatches = ["sf-dump-str", "sf-dump-key", "sf-dump-public", "sf-dump-protected", "sf-dump-private",].map(xpathHasClass).join(' or '); var xpathResult = doc.evaluate('.//span[' + classMatches + '][contains(translate(child::text(), ' + xpathString(searchQuery.toUpperCase()) + ', ' + xpathString(searchQuery.toLowerCase()) + '), ' + xpathString(searchQuery.toLowerCase()) + ')]', root, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); while (node = xpathResult.iterateNext()) state.nodes.push(node); showCurrent(state); }, 400); }); Array.from(search.querySelectorAll('.sf-dump-search-input-next, .sf-dump-search-input-previous')).forEach(function (btn) { addEventListener(btn, 'click', function (e) { e.preventDefault(); -1 !== e.target.className.indexOf('next') ? state.next() : state.previous(); searchInput.focus(); collapseAll(root); showCurrent(state); }) }); addEventListener(root, 'keydown', function (e) { var isSearchActive = !/\bsf-dump-search-hidden\b/.test(search.className); if ((114 === e.keyCode && !isSearchActive) || (isCtrlKey(e) && 70 === e.keyCode)) { /* F3 or CMD/CTRL + F */ if (70 === e.keyCode && document.activeElement === searchInput) { /* * If CMD/CTRL + F is hit while having focus on search input, * the user probably meant to trigger browser search instead. * Let the browser execute its behavior: */ return; } e.preventDefault(); search.className = search.className.replace(/\bsf-dump-search-hidden\b/, ''); searchInput.focus(); } else if (isSearchActive) { if (27 === e.keyCode) { /* ESC key */ search.className += ' sf-dump-search-hidden'; e.preventDefault(); resetHighlightedNodes(root); searchInput.value = ''; } else if ((isCtrlKey(e) && 71 === e.keyCode) /* CMD/CTRL + G */ || 13 === e.keyCode /* Enter */ || 114 === e.keyCode /* F3 */) { e.preventDefault(); e.shiftKey ? state.previous() : state.next(); collapseAll(root); showCurrent(state); } } }); } if (0 >= options.maxStringLength) { return; } try { elt = root.querySelectorAll('.sf-dump-str'); len = elt.length; i = 0; t = []; while (i < len) t.push(elt[i++]); len = t.length; for (i = 0; i < len; ++i) { elt = t[i]; s = elt.innerText || elt.textContent; x = s.length - options.maxStringLength; if (0 < x) { h = elt.innerHTML; elt[elt.innerText ? 'innerText' : 'textContent'] = s.substring(0, options.maxStringLength); elt.className += ' sf-dump-str-collapse'; elt.innerHTML = '<span class=sf-dump-str-collapse>' + h + '<a class="sf-dump-ref sf-dump-str-toggle" title="Collapse"> ◀</a></span>' + '<span class=sf-dump-str-expand>' + elt.innerHTML + '<a class="sf-dump-ref sf-dump-str-toggle" title="' + x + ' remaining characters"> ▶</a></span>'; } } } catch (e) { } }; })(document); </script>
+
+    <link rel="stylesheet" href="comparison.css">
+</head>
+
+<body class=" " data-bs-spy="scroll" data-bs-target="#elements-section" data-bs-offset="0" tabindex="0">
+    <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body">
+                <img src="http://159.89.166.77/sdg_jk/assets/images/sdg-loader.gif" alt="Loading..." />
+            </div>
+        </div>
+    </div>
+    <div class="wrapper dashboard-wrapper">
+        <header class="cs-header">
+            <div class="colored-strips"></div>
+            <div class="header-content">
+                <div class="header-left">
+                    <a href="http://159.89.166.77/sdg_jk/dashboard" class="header-niti-logo">
+                        <img src="http://159.89.166.77/sdg_jk/assets/images/niti.png" alt="Niti Aayog" />
+                    </a>
+                    <a href="http://159.89.166.77/sdg_jk/dashboard" class="header-text-logo">
+                        <div class="top-title">JAMMU & KASHMIR</div>
+                        <div class="bottom-title">SDG Index & Dashboard</div>
+                    </a>
+                </div>
+                <div class="header-right">
+                    <!-- <a href="sign-in.html" class="btn btn-sm btn-primary header-login-btn">Login</a> -->
+                    <a href="http://159.89.166.77/sdg_jk/dashboard" class="header-satyamev__logo">
+                        <img src="http://159.89.166.77/sdg_jk/assets/images/satyamev.png" alt="Satyamev" />
+                    </a>
+
+                    <span class="toggle-sidenav-btn" role="button" id="show-sidenav" data-bs-toggle="modal"
+                        data-bs-target="#sidebarMenu">
+                        <i class="bi bi-list"></i>
+                    </span>
+                </div>
+            </div>
+            <div class="colored-strips"></div>
+        </header>
+        <main>
+            <section>
+                <div class="goals-scale-wrapper">
+                    <div class="goals-scale-area" data-goals-scale>
+                        <img data-goal-btn="0" role="button" src="sdg-wheel.png" alt="All Goals" class="active" />
+                        <img data-goal-btn="1" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_1.jpg" alt="No Poverty" />
+                        <img data-goal-btn="2" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_2.jpg" alt="Zero Hunger" />
+                        <img data-goal-btn="3" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_3.jpg" alt="Good Health &amp; Well-Being" />
+                        <img data-goal-btn="4" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_4.jpg" alt="Quality Education" />
+                        <img data-goal-btn="5" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_5.jpg" alt="Gender Equality" />
+                        <img data-goal-btn="6" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_6.jpg" alt="Clean Water &amp; Sanitation" />
+                        <img data-goal-btn="7" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_7.jpg" alt="Affordable &amp; Clean Energy" />
+                        <img data-goal-btn="8" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_8.jpg" alt="Decent Work &amp; Economic Growth" />
+                        <img data-goal-btn="9" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_9.jpg" alt="Industry, Innovation &amp; Infrastructure">
+                        <img data-goal-btn="10" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_10.jpg" alt="Reduced Inequalities" />
+                        <img data-goal-btn="11" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_11.jpg" alt="Sustainable Cities and Communities" />
+                        <img data-goal-btn="12" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_12.jpg" alt="Responsible Consumption and Production">
+                        <img data-goal-btn="13" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_13.jpg" alt="Climate Action" />
+                        <img data-goal-btn="15" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_15.jpg" alt="Life on Land" />
+                        <img data-goal-btn="16" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_16.jpg" alt="Peace, Justice and Strong Institutions" />
+                    </div>
+                </div>
+                <div class="selected-goal-text-wrapper" data-selected-goal-color="0">
+                    <div class="selected-goal-text-area">
+                        <h4>All Goals</h4>
+                    </div>
+                </div>
+                <div class="comparison-stats-wrapper">
+                    <div class="comparison-stats-grid">
+                        <div class="comparison-stats-grid-item">
+                            <div class="comparison-stats-card">
+                                <span class="comp-title">India</span>
+                                <span class="comp-value">54</span>
+                            </div>
+                        </div>
+                        <div class="comparison-stats-grid-item">
+                            <div class="comparison-stats-card">
+                                <span class="comp-title">J&K</span>
+                                <span class="comp-value">31</span>
+                            </div>
+                        </div>
+                        <div class="comparison-stats-grid-item">
+                            <div class="comparison-stats-card">
+                                <span class="comp-title">Kerala</span>
+                                <span class="comp-value">72</span>
+                                <span class="comp-highlight">Best Performing State</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="graph-section">
+                <div class="graph-wrapper">
+                    <div id="comparison-graph"></div>
+                </div>
+            </section>
+            <section class="comparison-table-section">
+                <div class="comparison-table-wrapper">
+                    <div class="table-responsive">
+                        <table class="table cs-table-2 cs-table-sticky-header table-striped mb-0 text-center" role="grid">
+                            <colgroup>
+                                <col style="">
+                                <col style="min-width: 132px">
+                                <col style="min-width: 134px">
+                                <col style="min-width: 220px">
+                                <col style="min-width: 220px">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Years</th>
+                                    <th>India Score</th>
+                                    <th>J & K Score</th>
+                                    <th>Best Performing State Scores</th>
+                                    <th>Best Performing States</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2023</td>
+                                    <td>54</td>
+                                    <td>31</td>
+                                    <td>72</td>
+                                    <td>Kerala</td>
+                                </tr>
+                                <tr>
+                                    <td>2022</td>
+                                    <td>40</td>
+                                    <td>55</td>
+                                    <td>94</td>
+                                    <td>Assam</td>
+                                </tr>
+                                <tr>
+                                    <td>2021</td>
+                                    <td>54</td>
+                                    <td>31</td>
+                                    <td>72</td>
+                                    <td>Gujarat</td>
+                                </tr>
+                                <tr>
+                                    <td>2020</td>
+                                    <td>54</td>
+                                    <td>31</td>
+                                    <td>72</td>
+                                    <td>Haryana</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer class="cs-footer">
+            <div class="cs-footer-wrapper">
+                Copyrights © 2024 All Rights Reserved
+            </div>
+        </footer>
+    </div>
+    <div class="modal fade" id="sidebarMenu" tabindex="-1" aria-labelledby="sidebarMenuLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <a href="http://159.89.166.77/sdg_jk/login" class="btn btn-sm btn-primary">Login <i
+                            class="bi bi-box-arrow-in-right"></i></a>
+                </div>
+                <div class="modal-body">
+                    <nav class="sidebar-nav-wrapper">
+                        <div class="sidebar-nav__body">
+                            <ul>
+                                <li>
+                                    <a href="http://159.89.166.77/sdg_jk/dashboard" class="active">Home</a>
+                                </li>
+                                <li>
+                                    <a href="http://159.89.166.77/sdg_jk/about-us" class="">About Us</a>
+                                </li>
+                                <li>
+                                    <a href="http://159.89.166.77/sdg_jk/whats-new" class="">What's New</a>
+                                </li>
+                                <li>
+                                    <a href="http://159.89.166.77/sdg_jk/public-resources" class="">Resources</a>
+                                </li>
+                                <li>
+                                    <a href="http://159.89.166.77/sdg_jk/contact-us" class="">Contact Us</a>
+                                </li>
+                                <li>
+                                    <a href="https://sdgindiaindex.niti.gov.in/#/ranking" target="_blank">Compare
+                                        SDGs</a>
+                                </li>
+                                <li>
+                                    <a href="http://159.89.166.77/sdg_jk/publications" class="">Publications</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="division-district-goal-indicators" aria-hidden="true" aria-labelledby="indicator1Label"
+        tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div id="loading">
+                <div class="loader simple-loader">
+                    <div class="loader-body">
+                        <img src="http://159.89.166.77/sdg_jk/assets/images/sdg-loader.gif" alt="Loading..." />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="modal-header" style="padding-right: 65px; position: relative;">
+                    <h1 class="modal-title fs-5" id="indicator1Label">
+                    </h1>
+                    <div class="district-disputed-icon-div">
+                        <span class="district-disputed-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-info-circle-fill" viewBox="0 0 16 16" style="color: #136a9f;">
+                                <path
+                                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
+                            </svg>
+                            These are the raw values provided from the source.
+                        </span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-target="#division-district-model"
+                        data-bs-toggle="modal" style="position: absolute; right: 20px;"></button>
+                </div>
+                <div class="colored-strips"></div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+        <script src="http://159.89.166.77/sdg_jk/assets/js/core/libs.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#dif_years').change(function () {
+                    var dif_year = $(this).val();
+                    var goal_id = $('#goal_id').val();
+                    var district_id = $('#district_id').val();
+                    $('.loader').show();
+                    $.ajax({
+                        url: "http://159.89.166.77/sdg_jk/public-dashboard/division-district-goal-indicators",
+                        type: 'POST',
+                        data: {
+                            _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                            dif_year: dif_year,
+                            goal_id: goal_id,
+                            district_id: district_id
+                        },
+                        success: function (response) {
+                            $('#division-district-goal-indicators').html(response);
+                            // Hide loader and remove blur from page
+                            $('.loader').hide();
+                            $('body').removeClass('blur');
+                        },
+                        error: function (xhr) {
+                            console.log(xhr.responseText);
+                            // Hide loader and remove blur from page
+                            $('.loader').hide();
+                            $('body').removeClass('blur');
+                        }
+                    });
+
+                });
+            });
+        </script>
+    </div>
+
+    <div class="modal fade" id="goal_indicator_score" aria-hidden="true" aria-labelledby="indicator2Label"
+        tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div id="loading">
+                <div class="loader simple-loader">
+                    <div class="loader-body">
+                        <img src="http://159.89.166.77/sdg_jk/assets/images/sdg-loader.gif" alt="Loading..." />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="indicator2Label">
+                        Performance of Indicator
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="colored-strips"></div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+        <script src="http://159.89.166.77/sdg_jk/assets/js/core/libs.min.js"></script>
+        <script>
+            //#endregion
+            $(document).ready(function () {
+                $('#year_dropdown').on('change', function () {
+                    var year = $(this).val();
+                    var goal_id = $('#goal_id').val();
+                    var utif_years = $('#utif_years').val(); // get the selected value of the dropdown
+                    $('.loader').show();
+                    $.ajax({
+                        url: "http://159.89.166.77/sdg_jk/public-dashboard/goal-indicator-data",
+                        type: 'POST',
+                        data: {
+                            _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                            goal_id: goal_id,
+                            year: year,
+                            utif_year: utif_years
+                        },
+                        success: function (response) {
+                            $('#goal_indicator_score').html(response);
+                            // Hide loader and remove blur from page
+                            $('.loader').hide();
+                            $('body').removeClass('blur');
+                        },
+                        error: function (xhr) {
+                            console.log(xhr.responseText);
+                            // Hide loader and remove blur from page
+                            $('.loader').hide();
+                            $('body').removeClass('blur');
+                        }
+                    });
+                });
+
+                $('#utif_years').on('change', function () {
+                    var utif_years = $(this).val();
+                    var goal_id = $('#goal_id').val();
+                    var dif_year = $('#year_dropdown').val(); // get the selected value of the dropdown
+                    $('.loader').show();
+                    $.ajax({
+                        url: "http://159.89.166.77/sdg_jk/public-dashboard/goal-indicator-data",
+                        type: 'POST',
+                        data: {
+                            _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                            goal_id: goal_id,
+                            utif_year: utif_years,
+                            year: dif_year
+                        },
+                        success: function (response) {
+                            $('#goal_indicator_score').html(response);
+                            let clickedTab = 2;
+                            $('[data-toggle-tab-btn]').removeClass("active");
+                            $('[data-toggle-tab-btn="2"]').addClass("active");
+                            $('[data-toggle-tab-content]').addClass("d-none");
+                            $('[data-toggle-tab-content="' + clickedTab + '"]').removeClass("d-none");
+
+                            if (clickedTab == 2) {
+                                $('[data-content="know-calculation-btn"]').addClass("d-none");
+                                $('[data-content="score-board"]').addClass("d-none");
+                                $('[data-content="ut-score-board"]').removeClass("d-none");
+                            } else {
+                                $('[data-content="know-calculation-btn"]').removeClass("d-none");
+                                $('[data-content="score-board"]').removeClass("d-none");
+                                $('[data-content="ut-score-board"]').addClass("d-none");
+                            }
+                            // Hide loader and remove blur from page
+                            $('.loader').hide();
+                            $('body').removeClass('blur');
+
+                        },
+                        error: function (xhr) {
+                            console.log(xhr.responseText);
+                            // Hide loader and remove blur from page
+                            $('.loader').hide();
+                            $('body').removeClass('blur');
+                        }
+                    });
+                });
+
+                /**
+                 * Below code will handle the tab menu click event
+                 */
+                $("[data-toggle-tab-btn]").click(function () {
+                    let clickedTab = $(this).data("toggle-tab-btn");
+                    $(this)
+                        .parents("[data-toggle-tab]")
+                        .find("[data-toggle-tab-btn]")
+                        .removeClass("active");
+                    $(this).addClass("active");
+                    $(this)
+                        .parents("[data-toggle-tab]")
+                        .find("[data-toggle-tab-content]")
+                        .addClass("d-none");
+                    $(this)
+                        .parents("[data-toggle-tab]")
+                        .find(`[data-toggle-tab-content="${clickedTab}"]`)
+                        .removeClass("d-none");
+
+                    if (clickedTab == 2) {
+                        $('[data-content="know-calculation-btn"]').addClass("d-none");
+                        $('[data-content="score-board"]').addClass("d-none");
+                        $('[data-content="ut-score-board"]').removeClass("d-none");
+                    } else {
+                        $('[data-content="know-calculation-btn"]').removeClass("d-none");
+                        $('[data-content="score-board"]').removeClass("d-none");
+                        $('[data-content="ut-score-board"]').addClass("d-none");
+                    }
+                });
+            });
+        </script>
+    </div>
+
+    <div class="modal fade" id="all-district-incator-model" aria-hidden="true" aria-labelledby="indicator3Label"
+        tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div id="loading">
+                <div class="loader simple-loader">
+                    <div class="loader-body">
+                        <img src="http://159.89.166.77/sdg_jk/assets/images/sdg-loader.gif" alt="Loading..." />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="indicator3Label">
+                        Indicator Classification
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="colored-strips"></div>
+                <div class="modal-body">
+                    <div id="sunrise-graph"
+                        style="width: 100%; max-width: 1400px; min-height: 100vh; height: 700px; margin: 0 auto;"></div>
+                    <div class="performance-view__grid">
+                        <div class="pv-grid-item">
+                            <div class="pv-card">
+                                <div class="pv-card-header success">
+                                    <div class="pv-card-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                                        </svg>
+                                    </div>
+                                    <h6>Best Performers - (0)</h6>
+                                </div>
+                                <div class="pv-card-body">
+                                    <table class="pv-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Indicator</th>
+                                                <th>Input Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>No data</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pv-grid-item">
+                            <div class="pv-card">
+                                <div class="pv-card-header danger">
+                                    <div class="pv-card-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-exclamation-circle-fill"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2" />
+                                        </svg>
+                                    </div>
+                                    <h6>Requires Attention - (0)</h6>
+                                </div>
+                                <div class="pv-card-body">
+                                    <table class="pv-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Indicator</th>
+                                                <th>Input Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>No data</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pv-grid-item">
+                            <div class="pv-card">
+                                <div class="pv-card-header muted">
+                                    <div class="pv-card-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-exclamation-triangle-fill"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                                        </svg>
+                                    </div>
+                                    <h6>Requires Immediate Action - (0)</h6>
+                                </div>
+                                <div class="pv-card-body">
+                                    <table class="pv-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Indicator</th>
+                                                <th>Input Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>No data</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+
+            $(document).ready(function () {
+                const xAxisLabels = [{
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_1.jpg",
+                    title: "No Poverty",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_2.jpg",
+                    title: "Zero hunger",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_3.jpg",
+                    title: "Good health and well-being",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_4.jpg",
+                    title: "Quality education",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_5.jpg",
+                    title: "Gender equality",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_6.jpg",
+                    title: "Clean water and sanitation",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_7.jpg",
+                    title: "Affordable and clean energy",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_8.jpg",
+                    title: "Decent work and economic growth",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_9.jpg",
+                    title: "Industry, Innovation and Infrastructure",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_10.jpg",
+                    title: "Reduced inequality",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_11.jpg",
+                    title: "Sustainable cities and communities",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_12.jpg",
+                    title: "Responsible consumption and production",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_13.jpg",
+                    title: "Climate action",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_14.jpg",
+                    title: "Life below water",
+                    class: "disabled-goal",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_15.jpg",
+                    title: "Life on land",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_16.jpg",
+                    title: "Peace, justice and strong institutions",
+                    class: "",
+                },
+                {
+                    img: "http://159.89.166.77/sdg_jk/assets/images/goals/goal_17.jpg",
+                    title: "Partnership for the Goals",
+                    class: "disabled-goal",
+                },
+                ];
+
+                const sunriseCategories = [];
+
+                for (let index = 0; index < xAxisLabels.length; index++) {
+                    const element = xAxisLabels[index];
+                    sunriseCategories.push(
+                        `<div class="label_wrapper ${element.class}">
+      <img class="label_img" src="${element.img}" />
+      <div class="label_text">${element.title}</div>
+    </div>`
+                    );
+                }
+
+                Highcharts.chart(
+                    "sunrise-graph", {
+                    exporting: {
+                        buttons: {
+                            contextButton: {
+                                menuItems: Highcharts.getOptions().exporting.buttons.contextButton.menuItems.filter(
+                                    (item) => item !== "viewFullscreen"
+                                ),
+                            },
+                        },
+                    },
+                    chart: {
+                        polar: true,
+                        type: "column",
+                        marginBottom: -350,
+                    },
+                    title: {
+                        text: "",
+                    },
+                    legend: {
+                        // margin: 20, // Add bottom margin to legends
+                        y: -100, // Adjust the legend position upwards
+                    },
+                    pane: {
+                        startAngle: -90,
+                        endAngle: 90,
+                        size: "85%", // Adjust size to allow for proper spacing
+                    },
+                    xAxis: {
+                        tickInterval: 20,
+                        min: 0,
+                        max: 340,
+                        //categories: sunriseCategories,
+                        // gridLineWidth: 0,
+                        // gridLineColor: "transparent",
+                        lineWidth: 0,
+                        tickmarkPlacement: "on", // Adjust tickmark placement for better alignment
+                        labels: {
+                            useHTML: true,
+                            distance: 40,
+                            formatter: function () {
+                                return sunriseCategories[this.value / 20];
+                            },
+                            // allowOverlap: true,
+                            style: {
+                                // width: "140px", // Adjust label width if necessary
+                                textAlign: "center", // Center align text
+                                zIndex: 0,
+                            },
+                        },
+                    },
+                    yAxis: {
+                        min: -10,
+                        // gridLineWidth: 0,
+                        labels: {
+                            enabled: false,
+                            zIndex: 0,
+                            // allowOverlap: true,
+                        },
+                    },
+                    plotOptions: {
+                        series: {
+                            stacking: "normal",
+                            pointStart: 0,
+                            pointInterval: 20,
+                            cursor: "pointer",
+                        },
+                        column: {
+                            pointStart: 10,
+                            pointInterval: 20,
+                            stacking: "normal",
+                            borderWidth: 0,
+                            borderColor: "transparent",
+                            // pointPadding: 0.05,
+                            groupPadding: 0.05,
+                            pointPadding: 0,
+                            // groupPadding: 0,
+                            pointPlacement: "on", // Change to 'on' for alignment
+                        },
+                    },
+                    series: [{
+                        type: "column",
+                        name: "Goal 14 - Not Applicable",
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0],
+                        color: "#ccc", // Grey color for the background
+                        zIndex: 999999999,
+                        // enableMouseTracking: false, // This disables interactions such as tooltips for this series
+                        // showInLegend: false, // Optional: Hide from legend
+                        tooltip: {
+                            pointFormatter: function () {
+                                return '<span style="color:#000;">Goal 14 Life under Water: This particular SDGs does not pertain to J&K as the terrains of J&K are hilly and plain and have no costal areas within its boundaries.</span>';
+                            },
+                            headerFormat: "", // Remove header
+                            footerFormat: "", // Remove footer
+                            formatter: function () {
+                                // Prevent the default tooltip
+                                return false;
+                            },
+                        },
+                    },
+                    {
+                        type: "column",
+                        name: "Goal 17 - Not Applicable",
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10],
+                        color: "#ccc", // Grey color for the background
+                        zIndex: 99999999,
+                        // enableMouseTracking: false, // This disables interactions such as tooltips for this series
+                        // showInLegend: false, // Optional: Hide from legend
+                        tooltip: {
+                            pointFormatter: function () {
+                                return '<span style="color:#000;">Goal 17 Partnership for the goals: This particular SDG does not pertain to J&K.</span>';
+                            },
+                            headerFormat: "", // Remove header
+                            footerFormat: "", // Remove footer
+                            formatter: function () {
+                                // Prevent the default tooltip
+                                return false;
+                            },
+                        }
+                    },
+                    {
+                        type: "column",
+                        name: "Best Performers",
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        color: "#62AA24",
+                        tooltip: {
+                            headerFormat: "", // Remove header
+                            footerFormat: "", // Remove footer
+                            zIndex: 99999,
+                        },
+                    },
+                    {
+                        type: "column",
+                        name: "Requires Attention",
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        color: "#FDD617",
+                        tooltip: {
+                            headerFormat: "", // Remove header
+                            footerFormat: "", // Remove footer
+                            zIndex: 99999,
+                        },
+                    },
+                    {
+                        type: "column",
+                        name: "Requires Immediate Action",
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        color: "#D8191E",
+                        tooltip: {
+                            headerFormat: "", // Remove header
+                            footerFormat: "", // Remove footer
+                            zIndex: 99999,
+                        },
+                    },
+                    ],
+                    responsive: {
+                        rules: [{
+                            condition: {
+                                maxWidth: 565,
+                            },
+                            chartOptions: {
+                                chart: {
+                                    marginBottom: 0,
+                                },
+                                pane: {
+                                    size: "75%", // Adjust size to allow for proper spacing
+                                },
+                            },
+                        },],
+                    },
+                },
+                    function (chart) {
+                        // Calculate center position
+                        var centerX = chart.plotLeft + chart.plotWidth * 0.5;
+                        var centerY = chart.plotTop + chart.plotHeight * 0.5 - 45;
+                        var width = 223; // Width of the image
+                        var height = 150; // Height of the image
+
+                        let mobileMedia = window.matchMedia("(max-width: 565px)");
+
+                        if (mobileMedia.matches) {
+                            centerY = chart.plotTop + chart.plotHeight * 0.5 - 17;
+                            width = 60; // Width of the image
+                            height = 40; // Height of the image
+                        }
+
+                        chart.renderer
+                            .image(
+                                "http://159.89.166.77/sdg_jk/assets/images/semi-sgd.png",
+                                centerX - width / 2,
+                                centerY - height / 2,
+                                width,
+                                height
+                            )
+                            .attr({
+                                zIndex: 10, // Ensures the image is above most chart elements
+                            })
+                            .add();
+                    }
+                );
+            });
+        </script>
+    </div>
+
+    <div class="modal fade" id="division-district-model" aria-hidden="true" aria-labelledby="indicator4Label"
+        tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div id="loading">
+                <div class="loader simple-loader">
+                    <div class="loader-body">
+                        <img src="http://159.89.166.77/sdg_jk/assets/images/sdg-loader.gif" alt="Loading..." />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="indicator4Label">
+                        Goal wise Score
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="colored-strips"></div>
+                <div class="modal-body">
+                    <div class="gws__wrapper">
+                        <div class="gws__goals-scale">
+                            <div class="gws__goals-scale-body">
+
+                            </div>
+                        </div>
+                        <div class="gws__sidebar-table">
+                            <div class="gws__sidebar modal-columns-height" style="background-image: url();">
+                                <div class="gws__badge-container">
+                                    <div class="gws__badge">
+                                        <h6>Overall Composite Score</h6>
+                                        <div class="gws__badge-value">
+                                            0
+                                        </div>
+                                    </div>
+                                    <div class="gws__badge">
+                                        <h6>Time Period</h6>
+                                        <div class="gws__badge-value"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gws__table-wrapper">
+                                <div class="table-responsive modal-columns-height">
+                                    <table class="table cs-table-2 cs-table-sticky-header table-striped mb-0"
+                                        role="grid">
+                                        <colgroup>
+                                            <col style="width: 100%" />
+                                            <col style="width: 120px; min-width: 120px" />
+                                            <col style="width: 120px; min-width: 120px" />
+                                            <col style="width: 120px; min-width: 120px" />
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                                <th>Goal</th>
+                                                <th>2020</th>
+                                                <th>2021</th>
+                                                <th>2022</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="4" class="text-center">No data found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="trend-score-chart">
+                                    <p class="trend-score-chart__title">Trend:</p>
+                                    <div class="trend-score-chart__list">
+                                        <div class="trend-score-chart__list-item">
+                                            <p class="trend-score-chart__item-title">Improved</p>
+                                            <img src="http://159.89.166.77/sdg_jk/assets/images/arrow-up.svg"
+                                                alt="Improved" />
+                                        </div>
+                                        <div class="trend-score-chart__list-item">
+                                            <p class="trend-score-chart__item-title">No Change</p>
+                                            <img src="http://159.89.166.77/sdg_jk/assets/images/arrow-straight.svg"
+                                                alt="No Change" />
+                                        </div>
+                                        <div class="trend-score-chart__list-item">
+                                            <p class="trend-score-chart__item-title">Dropped</p>
+                                            <img src="http://159.89.166.77/sdg_jk/assets/images/arrow-down.svg"
+                                                alt="Dropped" />
+                                        </div>
+                                        <div class="trend-score-chart__list-item">
+                                            <p class="trend-score-chart__item-title">No Data</p>
+                                            <img src="http://159.89.166.77/sdg_jk/assets/images/dual-circle.svg"
+                                                alt="Dropped" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="gws-chart-area">
+                                    <div class="color-indicator-charts mt-3">
+                                        <div class="color-indicator__item">
+                                            <div class="ci__color ci__color-skyblue"></div>
+                                            <div class="ci__title">Achiever (100)</div>
+                                        </div>
+                                        <div class="color-indicator__item">
+                                            <div class="ci__color ci__color-green"></div>
+                                            <div class="ci__title">Front Runner (65 - 99)</div>
+                                        </div>
+                                        <div class="color-indicator__item">
+                                            <div class="ci__color ci__color-yellow"></div>
+                                            <div class="ci__title">Performer (50 - 64)</div>
+                                        </div>
+                                        <div class="color-indicator__item">
+                                            <div class="ci__color ci__color-red"></div>
+                                            <div class="ci__title">Aspirant (0 - 49)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Library Bundle Script -->
+    <script src="http://159.89.166.77/sdg_jk/assets/js/core/libs.min.js"></script>
+
+    <!-- App Script -->
+    <script src="http://159.89.166.77/sdg_jk/assets/js/hope-ui.js" defer></script>
+    <script src="http://159.89.166.77/sdg_jk/assets/js/dashboard.js" defer></script>
+
+    <script src="http://159.89.166.77/sdg_jk/assets/js/map/highmap.js"></script>
+    <script src="http://159.89.166.77/sdg_jk/assets/js/highcharts-more.js"></script>
+    <script src="http://159.89.166.77/sdg_jk/assets/js/map/module/exporting.js"></script>
+    <script src="http://159.89.166.77/sdg_jk/assets/js/map/module/offline_exporting.js"></script>
+    <script src="http://159.89.166.77/sdg_jk/assets/js/map/module/data.js"></script>
+    <script src="http://159.89.166.77/sdg_jk/assets/js/map/module/accessibility.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var path = window.location.pathname.split('/');
+            var index = path.indexOf('dashboard');
+
+            if (index !== -1 && index < path.length - 1) {
+                var maap = $('#map-section');
+                if (maap.length) {
+                    $('html, body').animate({
+                        scrollTop: maap.offset().top - 80
+                    }, 300);
+                }
+            }
+
+            $('.mc-options-list img').on('click', function () {
+                var goalId = $(this).data('mc-goal').replace('mc-', '');
+                var districtId = $('[data-mc-district]').data('mc-district');
+                $('.loader').show();
+                $.ajax({
+                    url: "http://159.89.166.77/sdg_jk/public-dashboard/district-sdg-score-for-goal",
+                    type: 'POST',
+                    data: {
+                        _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                        goal_id: goalId,
+                        district_id: districtId
+                    },
+                    success: function (response) {
+                        $('.sdg-score-table').html(response);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
+                    },
+                    complete: function () {
+                        // Hide the loader
+                        $('.loader').hide();
+                    }
+                });
+            });
+
+        });
+
+        function showIndicatorDetailsforDistrict(year, districtId) {
+            $('.loader').show();
+            $.ajax({
+                url: "http://159.89.166.77/sdg_jk/public-dashboard/district-indicators-for-year",
+                type: 'POST',
+                data: {
+                    _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                    year: year,
+                    district_id: districtId
+                },
+                success: function (response) {
+                    $('#all-district-incator-model').html(response);
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                },
+                complete: function () {
+                    // Hide the loader
+                    $('.loader').hide();
+                }
+            });
+        }
+
+        function getSdgScoreOfGoals(goalID, defaultYear) {
+            // Show loader and blur the page
+            $('.loader').show();
+            $('body').addClass('blur');
+            $.ajax({
+                url: "http://159.89.166.77/sdg_jk/public-dashboard/goal-indicator-data",
+                type: 'POST',
+                data: {
+                    _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                    goal_id: goalID,
+                    year: defaultYear
+                },
+                success: function (response) {
+                    $('#goal_indicator_score').html(response);
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                },
+                complete: function () {
+                    // Hide the loader
+                    $('.loader').hide();
+                }
+            });
+        }
+
+        function showDistrictSdgGoalBiseDetails(districtId, defaultYear) {
+            $('.loader').show();
+            $.ajax({
+                url: "http://159.89.166.77/sdg_jk/public-dashboard/division-district-goals",
+                type: 'POST',
+                data: {
+                    _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                    district_id: districtId,
+                    year: defaultYear
+                },
+                success: function (response) {
+                    $('#division-district-model').html(response);
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                },
+                complete: function () {
+                    // Hide the loader
+                    $('.loader').hide();
+                }
+            });
+        }
+
+        function showGoalIndicatorOfdivisionDistrict(goalId, districtId) {
+            $('.loader').show();
+            $.ajax({
+                url: "http://159.89.166.77/sdg_jk/public-dashboard/division-district-goal-indicators",
+                type: 'POST',
+                data: {
+                    _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                    goal_id: goalId,
+                    district_id: districtId
+                },
+                success: function (response) {
+                    $('#division-district-goal-indicators').html(response);
+                },
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                },
+                complete: function () {
+                    // Hide the loader
+                    $('.loader').hide();
+                }
+            });
+        }
+
+        (async () => {
+
+            const topology = await fetch(
+                'http://159.89.166.77/sdg_jk/assets/js/jk.topo.json'
+            ).then(response => response.json());
+
+            // Instantiate the map
+            Highcharts.mapChart('maap', {
+                chart: {
+                    map: topology,
+                    spacingBottom: 20
+                },
+
+                title: {
+                    text: '',
+                },
+
+                accessibility: {
+                    series: {
+                        descriptionFormat: 'SDG Index'
+                    },
+                    point: {
+                        valueDescriptionFormat: '{point.name}.'
+                    }
+                },
+
+                legend: {
+                    enabled: true
+                },
+
+                plotOptions: {
+                    map: {
+                        allAreas: false,
+                        joinBy: ['dt_code', 'code'],
+                        dataLabels: {
+                            enabled: true,
+                            color: '#FFFFFF',
+                            style: {
+                                fontWeight: 'bold'
+                            },
+                            // Only show dataLabels for areas with high label rank
+                            format: '{point.properties.district}'
+                        },
+                        tooltip: {
+                            headerFormat: '',
+                            pointFormat: '{point.properties.district}: <b>{series.name}</b>'
+                        },
+                        point: {
+                            events: {
+                                click: function () {
+                                    // Show loader
+                                    document.getElementById('loading').style.display = 'block';
+                                    // Get goalId and districtId
+                                    var goalId = $('[data-mc-header]').data('mc-header');
+                                    if (goalId == undefined) {
+                                        goalId = 1;
+                                    } else {
+                                        goalId = goalId.replace('mc-', '');
+                                    }
+                                    var districtcode = this.properties.dt_code;
+                                    if (districtcode != '991' && districtcode != '992') {
+                                        var baseUrl = 'http://159.89.166.77/sdg_jk/dashboard';
+                                        // Change the current URL
+                                        window.location.href = `${baseUrl}/${goalId}/${districtcode}`;
+                                    }
+                                }
+                            }
+                        },
+                    }
+                },
+
+                series: [{
+                    name: 'Achiever',
+                    color: '#00aeef',
+                    data: [].map(code => ({
+                        code
+                    }))
+                }, {
+                    name: 'Front Runner',
+                    color: '#00a084',
+                    data: ["007", "014", "006", "022", "011", "016", "019", "021", "018", "015", "001", "013", "002", "005", "017", "008"].map(code => ({
+                        code
+                    }))
+                }, {
+                    name: 'Performer',
+                    color: '#ffc40c',
+                    data: ["012", "010", "020", "009"].map(code => ({
+                        code
+                    }))
+                }, {
+                    name: 'Aspirant',
+                    color: '#dd1e47',
+                    data: [].map(code => ({
+                        code
+                    }))
+                },
+                {
+                    name: 'No Data',
+                    color: '#cccccc',
+                    data: ["991", "992"].map(code => ({
+                        code
+                    }))
+                }
+                ],
+
+                credits: false, //used to remove highcharts.com logo
+            });
+
+        })();
+    </script>
+    <script src="comparison.js"></script>
+</body>
+
+</html>

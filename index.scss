@@ -1,0 +1,130 @@
+.action-bar-area {
+  max-width: 1400px;
+  margin: 0 auto;
+  .dropdowns-area {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    .dropdowns-item {
+      margin-right: 15px;
+      .labeled-dropdown {
+        label {
+          position: relative;
+          span {
+            color: #000;
+            font-size: 14px;
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            pointer-events: none;
+          }
+          select {
+            color: #000;
+            background-color: #ececee;
+            border: 1px solid #0000004d;
+            padding: 6px 10px;
+            padding-left: 60px;
+            border-radius: 4px;
+            display: block;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+.themized-popup {
+  .modal-content {
+    border-radius: 0px;
+  }
+  .modal-header {
+    background-color: #ffc107;
+    border-radius: 0px;
+    border: 0px;
+  }
+  .modal-body {
+    .pv-table {
+      box-shadow: 0px 0px 30px 0px #0000000d;
+      thead {
+        tr {
+          th {
+            &:first-child {
+              border-top-left-radius: 4px;
+            }
+            &:last-child {
+              border-top-right-radius: 4px;
+            }
+          }
+        }
+      }
+      tbody {
+        tr {
+          td {
+            &:last-child {
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+  }
+  .modal-footer {
+    height: 50px;
+    background-color: #ffc107;
+    border-radius: 0px;
+  }
+}
+
+.dashboard-wrapper .banner-section .banner-area {
+  flex-direction: column;
+}
+
+.banner-btn-action-area {
+  margin-bottom: 30px;
+  padding: 0 10px;
+  overflow: auto;
+  width: 100%;
+  padding-bottom: 4px;
+  ul {
+    list-style: none;
+    max-width: max-content;
+    margin: 0 auto;
+    white-space: nowrap;
+    padding: 0;
+    li {
+      display: inline-block;
+      &:not(:last-child) {
+        margin-right: 12px;
+      }
+      button {
+        border-color: #ffc107;
+        background-color: #ffc107;
+        color: #000;
+        &.active,
+        &:hover {
+          border-color: #ffe185;
+          background-color: #ffe185;
+          color: #000;
+        }
+      }
+    }
+  }
+}
+
+#sdg-rotating-wheel-handler {
+  &.show-rotating-wheel {
+    .divisional-cards-title {
+      display: none;
+    }
+    .divisional-cards-grid {
+      grid-template-columns: 100%;
+      .divisional-cards-items {
+        &:first-child {
+          display: none;
+        }
+      }
+    }
+  }
+}

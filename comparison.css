@@ -1,0 +1,176 @@
+:root {
+  --goal-1: #e5233d;
+  --goal-2: #dda73a;
+  --goal-3: #4ca146;
+  --goal-4: #c7212f;
+  --goal-5: #ee402d;
+  --goal-6: #28bfe6;
+  --goal-7: #fbc412;
+  --goal-8: #a31d44;
+  --goal-9: #f26a2e;
+  --goal-10: #df1a83;
+  --goal-11: #f99d2a;
+  --goal-12: #bf8d2c;
+  --goal-13: #407f46;
+  --goal-14: #007dbd;
+  --goal-15: #59ba47;
+  --goal-16: #136a9f;
+  --goal-17: #1a3668;
+}
+
+.goals-scale-wrapper {
+  margin-top: 30px;
+}
+.goals-scale-wrapper .goals-scale-area {
+  padding: 20px;
+  max-width: var(--max-width);
+  margin: 0 auto 30px;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(16, 6.25%);
+}
+.goals-scale-wrapper .goals-scale-area img {
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  border: 5px solid transparent;
+}
+.goals-scale-wrapper .goals-scale-area img.active {
+  border: 2px solid #ccc;
+}
+@media (max-width: 992px) {
+  .goals-scale-wrapper .goals-scale-area {
+    grid-template-columns: repeat(16, 90px);
+  }
+}
+
+.selected-goal-text-wrapper[data-selected-goal-color="0"] {
+  background-color: #106ba3;
+}
+.selected-goal-text-wrapper[data-selected-goal-color="1"] {
+  background-color: var(--goal-1);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="2"] {
+  background-color: var(--goal-2);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="3"] {
+  background-color: var(--goal-3);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="4"] {
+  background-color: var(--goal-4);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="5"] {
+  background-color: var(--goal-5);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="6"] {
+  background-color: var(--goal-6);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="7"] {
+  background-color: var(--goal-7);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="8"] {
+  background-color: var(--goal-8);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="9"] {
+  background-color: var(--goal-9);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="10"] {
+  background-color: var(--goal-10);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="11"] {
+  background-color: var(--goal-11);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="12"] {
+  background-color: var(--goal-12);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="13"] {
+  background-color: var(--goal-13);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="14"] {
+  background-color: var(--goal-14);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="15"] {
+  background-color: var(--goal-15);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="16"] {
+  background-color: var(--goal-16);
+}
+.selected-goal-text-wrapper[data-selected-goal-color="17"] {
+  background-color: var(--goal-17);
+}
+.selected-goal-text-wrapper .selected-goal-text-area {
+  padding: 20px;
+  max-width: var(--max-width);
+  margin: 0 auto 30px;
+}
+.selected-goal-text-wrapper .selected-goal-text-area h4 {
+  color: #fff;
+  font-size: 30px;
+  font-weight: 500;
+}
+@media (max-width: 992px) {
+  .selected-goal-text-wrapper .selected-goal-text-area h4 {
+    font-size: 20px;
+  }
+}
+
+.graph-section .graph-wrapper {
+  padding: 0 20px;
+  max-width: var(--max-width);
+  margin: 0 auto 30px;
+}
+
+.comparison-stats-wrapper {
+  padding: 0 20px;
+  max-width: var(--max-width);
+  margin: 0 auto 30px;
+}
+.comparison-stats-wrapper .comparison-stats-grid {
+  margin-left: -10px;
+  margin-right: -10px;
+  display: grid;
+  grid-template-columns: repeat(3, 33.33%);
+}
+.comparison-stats-wrapper .comparison-stats-grid .comparison-stats-grid-item {
+  padding: 10px;
+}
+@media (max-width: 565px) {
+  .comparison-stats-wrapper .comparison-stats-grid {
+    grid-template-columns: 100%;
+  }
+}
+
+.comparison-stats-card {
+  padding: 20px 10px;
+  border-radius: 10px;
+  color: #1e1e1e;
+  text-align: center;
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 5.4px 0px rgba(0, 0, 0, 0.2509803922);
+}
+.comparison-stats-card .comp-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 5px;
+}
+.comparison-stats-card .comp-value {
+  color: #c7212f;
+  font-size: 28px;
+  font-weight: 700;
+  margin-right: 5px;
+}
+.comparison-stats-card .comp-highlight {
+  font-size: 14px;
+  font-weight: 500;
+}
+@media (max-width: 565px) {
+  .comparison-stats-card .comp-highlight {
+    display: block;
+  }
+}
+
+.comparison-table-section .comparison-table-wrapper {
+  padding: 0 20px;
+  max-width: var(--max-width);
+  margin: 0 auto 30px;
+}/*# sourceMappingURL=comparison.css.map */

@@ -1,0 +1,106 @@
+.action-bar-area {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.action-bar-area .dropdowns-area {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+.action-bar-area .dropdowns-area .dropdowns-item {
+  margin-right: 15px;
+}
+.action-bar-area .dropdowns-area .dropdowns-item .labeled-dropdown label {
+  position: relative;
+}
+.action-bar-area .dropdowns-area .dropdowns-item .labeled-dropdown label span {
+  color: #000;
+  font-size: 14px;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.action-bar-area .dropdowns-area .dropdowns-item .labeled-dropdown label select {
+  color: #000;
+  background-color: #ececee;
+  border: 1px solid rgba(0, 0, 0, 0.3019607843);
+  padding: 6px 10px;
+  padding-left: 60px;
+  border-radius: 4px;
+  display: block;
+  cursor: pointer;
+}
+
+.themized-popup .modal-content {
+  border-radius: 0px;
+}
+.themized-popup .modal-header {
+  background-color: #ffc107;
+  border-radius: 0px;
+  border: 0px;
+}
+.themized-popup .modal-body .pv-table {
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.0509803922);
+}
+.themized-popup .modal-body .pv-table thead tr th:first-child {
+  border-top-left-radius: 4px;
+}
+.themized-popup .modal-body .pv-table thead tr th:last-child {
+  border-top-right-radius: 4px;
+}
+.themized-popup .modal-body .pv-table tbody tr td:last-child {
+  text-align: center;
+}
+.themized-popup .modal-footer {
+  height: 50px;
+  background-color: #ffc107;
+  border-radius: 0px;
+}
+
+.dashboard-wrapper .banner-section .banner-area {
+  flex-direction: column;
+}
+
+.banner-btn-action-area {
+  margin-bottom: 30px;
+  padding: 0 10px;
+  overflow: auto;
+  width: 100%;
+  padding-bottom: 4px;
+}
+.banner-btn-action-area ul {
+  list-style: none;
+  max-width: -moz-max-content;
+  max-width: max-content;
+  margin: 0 auto;
+  white-space: nowrap;
+  padding: 0;
+}
+.banner-btn-action-area ul li {
+  display: inline-block;
+}
+.banner-btn-action-area ul li:not(:last-child) {
+  margin-right: 12px;
+}
+.banner-btn-action-area ul li button {
+  border-color: #ffc107;
+  background-color: #ffc107;
+  color: #000;
+}
+.banner-btn-action-area ul li button.active, .banner-btn-action-area ul li button:hover {
+  border-color: #ffe185;
+  background-color: #ffe185;
+  color: #000;
+}
+
+#sdg-rotating-wheel-handler.show-rotating-wheel .divisional-cards-title {
+  display: none;
+}
+#sdg-rotating-wheel-handler.show-rotating-wheel .divisional-cards-grid {
+  grid-template-columns: 100%;
+}
+#sdg-rotating-wheel-handler.show-rotating-wheel .divisional-cards-grid .divisional-cards-items:first-child {
+  display: none;
+}/*# sourceMappingURL=index.css.map */
