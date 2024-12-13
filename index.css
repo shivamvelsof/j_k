@@ -1,3 +1,12 @@
+.modal {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.note-line {
+  font-size: 12px;
+  color: #000;
+}
+
 .action-bar-area {
   max-width: 1400px;
   margin: 0 auto;
@@ -90,8 +99,8 @@
   color: #000;
 }
 .banner-btn-action-area ul li button.active, .banner-btn-action-area ul li button:hover {
-  border-color: #ffe185;
-  background-color: #ffe185;
+  border-color: #ff9900;
+  background-color: #ff9900;
   color: #000;
 }
 

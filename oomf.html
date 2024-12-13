@@ -30,7 +30,7 @@
     <script data-turbo-eval='false'>jQuery.noConflict(true);</script>
     <script> Sfdump = window.Sfdump || (function (doc) { doc.documentElement.classList.add('sf-js-enabled'); var rxEsc = /([.*+?^${}()|\[\]\/\\])/g, idRx = /\bsf-dump-\d+-ref[012]\w+\b/, keyHint = 0 <= navigator.platform.toUpperCase().indexOf('MAC') ? 'Cmd' : 'Ctrl', addEventListener = function (e, n, cb) { e.addEventListener(n, cb, false); }; if (!doc.addEventListener) { addEventListener = function (element, eventName, callback) { element.attachEvent('on' + eventName, function (e) { e.preventDefault = function () { e.returnValue = false; }; e.target = e.srcElement; callback(e); }); }; } function toggle(a, recursive) { var s = a.nextSibling || {}, oldClass = s.className, arrow, newClass; if (/\bsf-dump-compact\b/.test(oldClass)) { arrow = '▼'; newClass = 'sf-dump-expanded'; } else if (/\bsf-dump-expanded\b/.test(oldClass)) { arrow = '▶'; newClass = 'sf-dump-compact'; } else { return false; } if (doc.createEvent && s.dispatchEvent) { var event = doc.createEvent('Event'); event.initEvent('sf-dump-expanded' === newClass ? 'sfbeforedumpexpand' : 'sfbeforedumpcollapse', true, false); s.dispatchEvent(event); } a.lastChild.innerHTML = arrow; s.className = s.className.replace(/\bsf-dump-(compact|expanded)\b/, newClass); if (recursive) { try { a = s.querySelectorAll('.' + oldClass); for (s = 0; s < a.length; ++s) { if (-1 == a[s].className.indexOf(newClass)) { a[s].className = newClass; a[s].previousSibling.lastChild.innerHTML = arrow; } } } catch (e) { } } return true; }; function collapse(a, recursive) { var s = a.nextSibling || {}, oldClass = s.className; if (/\bsf-dump-expanded\b/.test(oldClass)) { toggle(a, recursive); return true; } return false; }; function expand(a, recursive) { var s = a.nextSibling || {}, oldClass = s.className; if (/\bsf-dump-compact\b/.test(oldClass)) { toggle(a, recursive); return true; } return false; }; function collapseAll(root) { var a = root.querySelector('a.sf-dump-toggle'); if (a) { collapse(a, true); expand(a); return true; } return false; } function reveal(node) { var previous, parents = []; while ((node = node.parentNode || {}) && (previous = node.previousSibling) && 'A' === previous.tagName) { parents.push(previous); } if (0 !== parents.length) { parents.forEach(function (parent) { expand(parent); }); return true; } return false; } function highlight(root, activeNode, nodes) { resetHighlightedNodes(root); Array.from(nodes || []).forEach(function (node) { if (!/\bsf-dump-highlight\b/.test(node.className)) { node.className = node.className + ' sf-dump-highlight'; } }); if (!/\bsf-dump-highlight-active\b/.test(activeNode.className)) { activeNode.className = activeNode.className + ' sf-dump-highlight-active'; } } function resetHighlightedNodes(root) { Array.from(root.querySelectorAll('.sf-dump-str, .sf-dump-key, .sf-dump-public, .sf-dump-protected, .sf-dump-private')).forEach(function (strNode) { strNode.className = strNode.className.replace(/\bsf-dump-highlight\b/, ''); strNode.className = strNode.className.replace(/\bsf-dump-highlight-active\b/, ''); }); } return function (root, x) { root = doc.getElementById(root); var indentRx = new RegExp('^(' + (root.getAttribute('data-indent-pad') || ' ').replace(rxEsc, '\\$1') + ')+', 'm'), options = { "maxDepth": 1, "maxStringLength": 160, "fileLinkFormat": false }, elt = root.getElementsByTagName('A'), len = elt.length, i = 0, s, h, t = []; while (i < len) t.push(elt[i++]); for (i in x) { options[i] = x[i]; } function a(e, f) { addEventListener(root, e, function (e, n) { if ('A' == e.target.tagName) { f(e.target, e); } else if ('A' == e.target.parentNode.tagName) { f(e.target.parentNode, e); } else { n = /\bsf-dump-ellipsis\b/.test(e.target.className) ? e.target.parentNode : e.target; if ((n = n.nextElementSibling) && 'A' == n.tagName) { if (!/\bsf-dump-toggle\b/.test(n.className)) { n = n.nextElementSibling || n; } f(n, e, true); } } }); }; function isCtrlKey(e) { return e.ctrlKey || e.metaKey; } function xpathString(str) { var parts = str.match(/[^'"]+|['"]/g).map(function (part) { if ("'" == part) { return '"\'"'; } if ('"' == part) { return "'\"'"; } return "'" + part + "'"; }); return "concat(" + parts.join(",") + ", '')"; } function xpathHasClass(className) { return "contains(concat(' ', normalize-space(@class), ' '), ' " + className + " ')"; } a('mouseover', function (a, e, c) { if (c) { e.target.style.cursor = "pointer"; } }); a('click', function (a, e, c) { if (/\bsf-dump-toggle\b/.test(a.className)) { e.preventDefault(); if (!toggle(a, isCtrlKey(e))) { var r = doc.getElementById(a.getAttribute('href').slice(1)), s = r.previousSibling, f = r.parentNode, t = a.parentNode; t.replaceChild(r, a); f.replaceChild(a, s); t.insertBefore(s, r); f = f.firstChild.nodeValue.match(indentRx); t = t.firstChild.nodeValue.match(indentRx); if (f && t && f[0] !== t[0]) { r.innerHTML = r.innerHTML.replace(new RegExp('^' + f[0].replace(rxEsc, '\\$1'), 'mg'), t[0]); } if (/\bsf-dump-compact\b/.test(r.className)) { toggle(s, isCtrlKey(e)); } } if (c) { } else if (doc.getSelection) { try { doc.getSelection().removeAllRanges(); } catch (e) { doc.getSelection().empty(); } } else { doc.selection.empty(); } } else if (/\bsf-dump-str-toggle\b/.test(a.className)) { e.preventDefault(); e = a.parentNode.parentNode; e.className = e.className.replace(/\bsf-dump-str-(expand|collapse)\b/, a.parentNode.className); } }); elt = root.getElementsByTagName('SAMP'); len = elt.length; i = 0; while (i < len) t.push(elt[i++]); len = t.length; for (i = 0; i < len; ++i) { elt = t[i]; if ('SAMP' == elt.tagName) { a = elt.previousSibling || {}; if ('A' != a.tagName) { a = doc.createElement('A'); a.className = 'sf-dump-ref'; elt.parentNode.insertBefore(a, elt); } else { a.innerHTML += ' '; } a.title = (a.title ? a.title + '\n[' : '[') + keyHint + '+click] Expand all children'; a.innerHTML += elt.className == 'sf-dump-compact' ? '<span>▶</span>' : '<span>▼</span>'; a.className += ' sf-dump-toggle'; x = 1; if ('sf-dump' != elt.parentNode.className) { x += elt.parentNode.getAttribute('data-depth') / 1; } } else if (/\bsf-dump-ref\b/.test(elt.className) && (a = elt.getAttribute('href'))) { a = a.slice(1); elt.className += ' sf-dump-hover'; elt.className += ' ' + a; if (/[\[{]$/.test(elt.previousSibling.nodeValue)) { a = a != elt.nextSibling.id && doc.getElementById(a); try { s = a.nextSibling; elt.appendChild(a); s.parentNode.insertBefore(a, s); if (/^[@#]/.test(elt.innerHTML)) { elt.innerHTML += ' <span>▶</span>'; } else { elt.innerHTML = '<span>▶</span>'; elt.className = 'sf-dump-ref'; } elt.className += ' sf-dump-toggle'; } catch (e) { if ('&' == elt.innerHTML.charAt(0)) { elt.innerHTML = '…'; elt.className = 'sf-dump-ref'; } } } } } if (doc.evaluate && Array.from && root.children.length > 1) { root.setAttribute('tabindex', 0); SearchState = function () { this.nodes = []; this.idx = 0; }; SearchState.prototype = { next: function () { if (this.isEmpty()) { return this.current(); } this.idx = this.idx < (this.nodes.length - 1) ? this.idx + 1 : 0; return this.current(); }, previous: function () { if (this.isEmpty()) { return this.current(); } this.idx = this.idx > 0 ? this.idx - 1 : (this.nodes.length - 1); return this.current(); }, isEmpty: function () { return 0 === this.count(); }, current: function () { if (this.isEmpty()) { return null; } return this.nodes[this.idx]; }, reset: function () { this.nodes = []; this.idx = 0; }, count: function () { return this.nodes.length; }, }; function showCurrent(state) { var currentNode = state.current(), currentRect, searchRect; if (currentNode) { reveal(currentNode); highlight(root, currentNode, state.nodes); if ('scrollIntoView' in currentNode) { currentNode.scrollIntoView(true); currentRect = currentNode.getBoundingClientRect(); searchRect = search.getBoundingClientRect(); if (currentRect.top < (searchRect.top + searchRect.height)) { window.scrollBy(0, -(searchRect.top + searchRect.height + 5)); } } } counter.textContent = (state.isEmpty() ? 0 : state.idx + 1) + ' of ' + state.count(); } var search = doc.createElement('div'); search.className = 'sf-dump-search-wrapper sf-dump-search-hidden'; search.innerHTML = ' <input type="text" class="sf-dump-search-input"> <span class="sf-dump-search-count">0 of 0<\/span> <button type="button" class="sf-dump-search-input-previous" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"\/><\/svg> <\/button> <button type="button" class="sf-dump-search-input-next" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"\/><\/svg> <\/button> '; root.insertBefore(search, root.firstChild); var state = new SearchState(); var searchInput = search.querySelector('.sf-dump-search-input'); var counter = search.querySelector('.sf-dump-search-count'); var searchInputTimer = 0; var previousSearchQuery = ''; addEventListener(searchInput, 'keyup', function (e) { var searchQuery = e.target.value; /* Don't perform anything if the pressed key didn't change the query */ if (searchQuery === previousSearchQuery) { return; } previousSearchQuery = searchQuery; clearTimeout(searchInputTimer); searchInputTimer = setTimeout(function () { state.reset(); collapseAll(root); resetHighlightedNodes(root); if ('' === searchQuery) { counter.textContent = '0 of 0'; return; } var classMatches = ["sf-dump-str", "sf-dump-key", "sf-dump-public", "sf-dump-protected", "sf-dump-private",].map(xpathHasClass).join(' or '); var xpathResult = doc.evaluate('.//span[' + classMatches + '][contains(translate(child::text(), ' + xpathString(searchQuery.toUpperCase()) + ', ' + xpathString(searchQuery.toLowerCase()) + '), ' + xpathString(searchQuery.toLowerCase()) + ')]', root, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null); while (node = xpathResult.iterateNext()) state.nodes.push(node); showCurrent(state); }, 400); }); Array.from(search.querySelectorAll('.sf-dump-search-input-next, .sf-dump-search-input-previous')).forEach(function (btn) { addEventListener(btn, 'click', function (e) { e.preventDefault(); -1 !== e.target.className.indexOf('next') ? state.next() : state.previous(); searchInput.focus(); collapseAll(root); showCurrent(state); }) }); addEventListener(root, 'keydown', function (e) { var isSearchActive = !/\bsf-dump-search-hidden\b/.test(search.className); if ((114 === e.keyCode && !isSearchActive) || (isCtrlKey(e) && 70 === e.keyCode)) { /* F3 or CMD/CTRL + F */ if (70 === e.keyCode && document.activeElement === searchInput) { /* * If CMD/CTRL + F is hit while having focus on search input, * the user probably meant to trigger browser search instead. * Let the browser execute its behavior: */ return; } e.preventDefault(); search.className = search.className.replace(/\bsf-dump-search-hidden\b/, ''); searchInput.focus(); } else if (isSearchActive) { if (27 === e.keyCode) { /* ESC key */ search.className += ' sf-dump-search-hidden'; e.preventDefault(); resetHighlightedNodes(root); searchInput.value = ''; } else if ((isCtrlKey(e) && 71 === e.keyCode) /* CMD/CTRL + G */ || 13 === e.keyCode /* Enter */ || 114 === e.keyCode /* F3 */) { e.preventDefault(); e.shiftKey ? state.previous() : state.next(); collapseAll(root); showCurrent(state); } } }); } if (0 >= options.maxStringLength) { return; } try { elt = root.querySelectorAll('.sf-dump-str'); len = elt.length; i = 0; t = []; while (i < len) t.push(elt[i++]); len = t.length; for (i = 0; i < len; ++i) { elt = t[i]; s = elt.innerText || elt.textContent; x = s.length - options.maxStringLength; if (0 < x) { h = elt.innerHTML; elt[elt.innerText ? 'innerText' : 'textContent'] = s.substring(0, options.maxStringLength); elt.className += ' sf-dump-str-collapse'; elt.innerHTML = '<span class=sf-dump-str-collapse>' + h + '<a class="sf-dump-ref sf-dump-str-toggle" title="Collapse"> ◀</a></span>' + '<span class=sf-dump-str-expand>' + elt.innerHTML + '<a class="sf-dump-ref sf-dump-str-toggle" title="' + x + ' remaining characters"> ▶</a></span>'; } } } catch (e) { } }; })(document); </script>
 
-    <link rel="stylesheet" href="comparison.css">
+    <link rel="stylesheet" href="oomf.css">
 </head>
 
 <body class=" " data-bs-spy="scroll" data-bs-target="#elements-section" data-bs-offset="0" tabindex="0">
@@ -68,193 +68,84 @@
             </div>
             <div class="colored-strips"></div>
         </header>
-        <main>
-            <section>
-                <div class="goals-scale-wrapper">
-                    <div class="goals-scale-area" data-goals-scale>
-                        <img data-goal-btn="0" role="button" src="sdg-wheel.png" alt="All Goals" class="active" />
-                        <img data-goal-btn="1" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_1.jpg" alt="No Poverty" />
-                        <img data-goal-btn="2" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_2.jpg" alt="Zero Hunger" />
-                        <img data-goal-btn="3" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_3.jpg" alt="Good Health &amp; Well-Being" />
-                        <img data-goal-btn="4" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_4.jpg" alt="Quality Education" />
-                        <img data-goal-btn="5" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_5.jpg" alt="Gender Equality" />
-                        <img data-goal-btn="6" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_6.jpg" alt="Clean Water &amp; Sanitation" />
-                        <img data-goal-btn="7" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_7.jpg" alt="Affordable &amp; Clean Energy" />
-                        <img data-goal-btn="8" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_8.jpg" alt="Decent Work &amp; Economic Growth" />
-                        <img data-goal-btn="9" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_9.jpg" alt="Industry, Innovation &amp; Infrastructure">
-                        <img data-goal-btn="10" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_10.jpg" alt="Reduced Inequalities" />
-                        <img data-goal-btn="11" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_11.jpg" alt="Sustainable Cities and Communities" />
-                        <img data-goal-btn="12" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_12.jpg" alt="Responsible Consumption and Production">
-                        <img data-goal-btn="13" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_13.jpg" alt="Climate Action" />
-                        <img data-goal-btn="15" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_15.jpg" alt="Life on Land" />
-                        <img data-goal-btn="16" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_16.jpg" alt="Peace, Justice and Strong Institutions" />
+        <main class="main-content px-4 py-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="img-area text-center mb-5" style="font-size: 200px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 655.23041 504.54282" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <g>
+                                <polygon points="431.995 495.42429 445.38431 495.42304 451.75366 443.77802 431.99234 443.77942 431.995 495.42429" fill="#a0616a"></polygon>
+                                <path d="M477.86841,495.12058h0c.41687,.70212,.63684,2.96829,.63684,3.78482h0c0,2.50977-2.03455,4.54437-4.54437,4.54437h-41.46506c-1.71216,0-3.10019-1.38797-3.10019-3.10019v-1.72632s-2.05124-5.18851,2.17191-11.58362c0,0,5.24878,5.00748,13.09183-2.83557l2.31284-4.18988,16.74179,12.24411,9.27972,1.14224c2.03021,.24988,3.8302-.03879,4.87451,1.72006h.00018v-.00003Z" fill="#2f2e41"></path>
+                            </g>
+                            <g>
+                                <polygon points="472.83075 481.80054 485.474 486.20753 508.49149 439.53885 489.83148 433.03403 472.83075 481.80054" fill="#a0616a"></polygon>
+                                <path d="M516.24658,496.61683h0c.16248,.80023-.37592,3.01248-.64471,3.78348h0c-.82629,2.36984-3.4173,3.62119-5.78717,2.79486l-39.15332-13.65173c-1.6167-.56369-2.4704-2.33127-1.90665-3.94803l.56839-1.63007s-.22864-5.57458,5.8645-10.22275c0,0,3.30756,6.45636,13.29547,1.63281l3.56335-3.19482,11.77722,17.07346,8.38629,4.13376c1.83478,.90436,3.62939,1.2244,4.03644,3.229l.00012,.00006,.00006-.00003Z" fill="#2f2e41"></path>
+                            </g>
+                            <path d="M56.08086,177.00002H4.08086c-2.20557,0-4-1.79443-4-4s1.79443-4,4-4H56.08086c2.20557,0,4,1.79443,4,4s-1.79443,4-4,4Z" fill="#e6e6e6"></path>
+                            <rect y="138.5709" width="195.08105" height="1" fill="#e6e6e6"></rect>
+                            <path d="M135.08086,247.00002h-52c-2.20557,0-4-1.79443-4-4s1.79443-4,4-4h52c2.20557,0,4,1.79443,4,4s-1.79443,4-4,4Z" fill="#e6e6e6"></path>
+                            <rect x="79" y="208.5709" width="195.08105" height="1" fill="#e6e6e6"></rect>
+                            <path d="M62.08086,339.00001H10.08086c-2.20557,0-4-1.79443-4-4s1.79443-4,4-4H62.08086c2.20557,0,4,1.79443,4,4s-1.79443,4-4,4Z" fill="#e6e6e6"></path>
+                            <rect x="6" y="300.57093" width="195.08105" height="1" fill="#e6e6e6"></rect>
+                            <g>
+                                <path d="M178.83574,305.04697l-8.22992-3.89856c3.37555,4.71082,6.28418,12.06805,7.84137,17.92249,2.63654-5.45343,6.88672-12.1261,11.09375-16.11194l-8.69812,2.23767c5.35974-26.26794,25.5191-45.12573,48.60437-45.12573v-2c-24.11316,0-45.13898,19.64758-50.61145,46.97607Z" fill="#3f3d56"></path>
+                                <path d="M216.71492,345.07093h-52c-2.20557,0-4-1.79443-4-4s1.79443-4,4-4h52c2.20557,0,4,1.79443,4,4s-1.79443,4-4,4Z" fill="#0f0671"></path>
+                            </g>
+                            <g>
+                                <path d="M554.02051,269.14426l-8.22992-3.89856c3.37555,4.71082,6.28418,12.06805,7.84137,17.92249,2.63654-5.45343,6.88672-12.1261,11.09375-16.11194l-8.69812,2.23767c5.35974-26.26794,25.5191-45.12573,48.60437-45.12573v-2c-24.11316,0-45.13898,19.64758-50.61145,46.97607Z" fill="#3f3d56"></path>
+                                <path d="M591.89972,309.16822h-52c-2.20557,0-4-1.79443-4-4s1.79443-4,4-4h52c2.20557,0,4,1.79443,4,4s-1.79443,4-4,4Z" fill="#0f0671"></path>
+                            </g>
+                            <polygon points="496.89758 193.00002 407.89758 206.00002 429.89758 473.00001 454.89758 472.00001 462.89758 290.00001 495.89758 371.00001 475.89758 471.00001 500.89758 470.02363 530.89758 370.00001 510.89758 256.00001 496.89758 193.00002" fill="#2f2e41"></polygon>
+                            <path d="M470.89758,62.00002h-32.39371l-26.28304,145.95483s15.648,21.46273,46.66237,1.25395,45.33763-3.25395,45.33763-3.25395l-33.32325-143.95484h0Z" fill="#0f0671"></path>
+                            <path d="M420.22084,314.95484l30.67675-55.95484,2-163.99999-14.39374-33-8.60626,14-26,16.10237,5.0395,70.90985-1.78871,46.05866-.92754,23.88395c-3.24083,14.31367,2.52127,72.85544,14,82Z" fill="#2f2e41"></path>
+                            <path d="M471.78009,65.65272l31.61749,26.84729,18.5,158.50001,.32325-.04518c1.69728,6.65636,1.81754,47.26144-2.00277,52.97048l-45.82049-46.42532-13.5-163.49999,10.88251-28.34729Z" fill="#2f2e41"></path>
+                            <g>
+                                <path d="M577.36719,227.41327c3.01202,5.8307,2.4458,12.11119-1.26459,14.02792-3.71045,1.91673-9.16003-1.25613-12.17206-7.08684-1.31848-2.55231-1.95111-5.19075-1.93475-7.51169l-12.45282-24.86644,11.79358-5.59526,11.02429,25.10732c1.90228,1.3298,3.68787,3.37268,5.00635,5.92497v.00002Z" fill="#a0616a"></path>
+                                <path d="M477.35535,69.86135s23.43933,18.92402,30.6712,25.52211c3.84296,3.50616,29.61536,57.60751,29.61536,57.60751l35.79688,62.34163-18.60724,7.06787-38.06311-57.48177-32.87085-37.91867-6.54224-57.13867v-.00002Z" fill="#2f2e41"></path>
+                            </g>
+                            <g>
+                                <path d="M331.42795,233.41327c-3.01202,5.8307-2.44583,12.11119,1.26462,14.02792s9.16003-1.25613,12.17206-7.08684c1.31845-2.55231,1.95114-5.19075,1.93475-7.51169l12.45282-24.86644-11.79361-5.59526-11.02429,25.10732c-1.90228,1.3298-3.68787,3.37268-5.00635,5.92497v.00002Z" fill="#a0616a"></path>
+                                <path d="M430.79184,74.50296s-22.79132,12.28241-30.02322,18.8805c-3.84296,3.50616-29.61536,65.60751-29.61536,65.60751l-35.79684,62.34163,18.60724,7.06787,38.06314-57.48177,25.87082-31.91867,12.89426-64.49706-.00003-.00002Z" fill="#2f2e41"></path>
+                            </g>
+                            <circle cx="455.41855" cy="30.49127" r="26.11532" fill="#a0616a"></circle>
+                            <path d="M466.13388,.00002s1.86801,7.47205-6.53806,.93401c-3.06522-2.38406-6.98517,1.45402-10.27408,1.86801-5.73056,.72134-10.27408,.17546-10.27408,3.73602,0,2.27624-3.02295-1.18764-4.67004-.93401-2.40796,.3708-3.73602,3.73602-3.73602,3.73602-3.64743,2.32111-6.53802,7.47205-.93402,9.34006-5.60403,6.53804-.40942,9.86954-.40942,9.86954l5.07947-6.13352c2.63086,1.43502,6.20319,5.14305,7.51337,3.06317,3.6947-5.86519,14.56665,.24976,19.07159-2.21354,4.53641-2.4805,7.03925,7.55642,7.03925,7.55642l2.07837,1.08108s-1.14435-2.01509,4.45966-3.8831c2.802-.93401,3.5025,1.86801,3.5025,4.90353,0,3.43348-.97791,6.79637-2.66479,9.78689l-5.29736,9.39119,2.32599-1.48312c4.89557-3.12153,8.09424-8.08768,9.82263-13.63052,.08337-.26745,.19415-.50902,.3374-.71566l-.55432-4.51628,1.82831,2.14621c.28198-.80369,.35431-1.55436,.03973-2.14621-3.36713-6.33555,1.86798-10.27407-3.73602-18.68012-8.30566-12.4585-14.0101-13.07608-14.0101-13.07608h.00006V.00002Z" fill="#2f2e41"></path>
+                            <path d="M289.56036,503.35282c0,.66003,.53003,1.19,1.19006,1.19h363.28998c.65997,0,1.19-.52997,1.19-1.19,0-.65997-.53003-1.19-1.19-1.19H290.75043c-.66003,0-1.19006,.53003-1.19006,1.19Z" fill="#ccc"></path>
+                            <g>
+                                <path d="M247.07872,249.50002h-31.3623c-4.03564,0-7.31885-3.2832-7.31885-7.31885v-35.3623c0-4.03564,3.2832-7.31885,7.31885-7.31885h31.3623c4.03564,0,7.31885,3.2832,7.31885,7.31885v35.3623c0,4.03564-3.2832,7.31885-7.31885,7.31885Z" fill="#fff"></path>
+                                <path d="M247.07872,249.50002h-31.3623c-4.03564,0-7.31885-3.2832-7.31885-7.31885v-35.3623c0-4.03564,3.2832-7.31885,7.31885-7.31885h31.3623c4.03564,0,7.31882,3.2832,7.31882,7.31885,3.51466,11.12619,3.15779,22.98074,0,35.3623,0,4.03564-3.28317,7.31885-7.31882,7.31885Zm-31.3623-49c-3.48438,0-6.31885,2.83447-6.31885,6.31885v35.3623c0,3.48438,2.83447,6.31885,6.31885,6.31885h31.3623c3.48438,0,6.31885-2.83447,6.31885-6.31885v-35.3623c0-3.48438-2.83447-6.31885-6.31885-6.31885h-31.3623Z" fill="#3f3d56"></path>
+                                <path d="M243.90977,221.00002h-25.84116c-1.09604,0-1.98779-.89174-1.98779-1.98778s.89175-1.98778,1.98779-1.98778h25.84116c1.09604,0,1.98779,.89174,1.98779,1.98778s-.89175,1.98778-1.98779,1.98778Z" fill="#0f0671"></path>
+                                <path d="M243.90977,232.00002h-25.84116c-1.09604,0-1.98779-.89174-1.98779-1.98778s.89175-1.98778,1.98779-1.98778h25.84116c1.09604,0,1.98779,.89174,1.98779,1.98778s-.89175,1.98778-1.98779,1.98778Z" fill="#0f0671"></path>
+                            </g>
+                            <g>
+                                <path d="M49.29526,154.69294H17.93296c-4.03564,0-7.31885-3.2832-7.31885-7.31885v-35.3623c0-4.03564,3.2832-7.31885,7.31885-7.31885h31.3623c4.03564,0,7.31885,3.2832,7.31885,7.31885v35.3623c0,4.03564-3.2832,7.31885-7.31885,7.31885Z" fill="#fff"></path>
+                                <path d="M49.29526,154.69294H17.93296c-4.03564,0-7.31886-3.2832-7.31886-7.31885-1.57703-13.02136-2.01147-25.14868,0-35.3623,0-4.03564,3.28322-7.31884,7.31886-7.31884h31.3623c4.03564,0,7.31885,3.2832,7.31885,7.31885v35.3623c0,4.03564-3.2832,7.31885-7.31885,7.31885Zm-31.3623-49c-3.48438,0-6.31885,2.83447-6.31885,6.31885v35.3623c0,3.48438,2.83447,6.31885,6.31885,6.31885h31.3623c3.48438,0,6.31885-2.83447,6.31885-6.31885v-35.3623c0-3.48438-2.83447-6.31885-6.31885-6.31885H17.93296Z" fill="#3f3d56"></path>
+                                <path d="M46.12632,126.19292H20.28518c-1.09605,0-1.98778-.89174-1.98778-1.98778s.89174-1.98778,1.98778-1.98778h25.84115c1.09605,0,1.98778,.89174,1.98778,1.98778s-.89174,1.98778-1.98779,1.98778Z" fill="#0f0671"></path>
+                                <path d="M46.12632,137.19294H20.28518c-1.09605,0-1.98778-.89174-1.98778-1.98778s.89174-1.98778,1.98778-1.98778h25.84115c1.09605,0,1.98778,.89174,1.98778,1.98778s-.89174,1.98778-1.98779,1.98778Z" fill="#0f0671"></path>
+                                <path d="M46.12632,115.19292H20.28518c-1.09605,0-1.98778-.89174-1.98778-1.98778s.89174-1.98778,1.98778-1.98778h25.84115c1.09605,0,1.98778,.89174,1.98778,1.98778s-.89174,1.98778-1.98779,1.98778Z" fill="#0f0671"></path>
+                            </g>
+                            <g>
+                                <path d="M383.94492,226.95511l-23.43674,20.84016c-3.01581,2.68169-7.651,2.40988-10.33264-.60593-9.74176-7.73694-17.73267-16.45679-23.49817-26.42596-2.6817-3.01575-2.40985-7.65096,.60593-10.33263l23.43674-20.84016c3.01581-2.68169,7.651-2.40985,10.33267,.60596l23.49817,26.42592c2.68167,3.01579,2.40985,7.65099-.60596,10.33266v-.00002Z" fill="#fff"></path>
+                                <path d="M383.94492,226.95511l-23.43674,20.84016c-3.01581,2.68169-7.651,2.40988-10.33264-.60593-11.11359-6.80438-19.44055-15.3111-23.49817-26.42596-2.6817-3.01575-2.40985-7.65096,.60593-10.33263l23.43674-20.84016c3.01581-2.68169,7.651-2.40985,10.33267,.60596l23.49817,26.42592c2.68167,3.01579,2.40985,7.65099-.60596,10.33266v-.00002Zm-55.99713-15.77705c-2.60385,2.31535-2.8385,6.31703-.52319,8.92085,5.19757,10.54388,13.21167,19.23315,23.49817,26.42596,2.31537,2.60382,6.31705,2.83849,8.9209,.52313l23.43674-20.84016c2.60385-2.31535,2.83853-6.31703,.52316-8.92087l-23.49817-26.42592c-2.31537-2.60384-6.31702-2.83852-8.92087-.52316l-23.43674,20.84016Z" fill="#3f3d56"></path>
+                                <path d="M362.63864,207.76308l-19.31085,17.17139c-.81906,.72832-2.078,.6545-2.80634-.16457s-.65448-2.078,.16458-2.80634l19.31085-17.17137c.81906-.72832,2.078-.6545,2.80634,.16457s.65448,2.078-.16458,2.80634v-.00002Z" fill="#0f0671"></path>
+                                <path d="M369.94812,215.98327l-19.31085,17.17139c-.81906,.72832-2.078,.6545-2.80634-.16457s-.65448-2.078,.16458-2.80634l19.31085-17.17137c.81906-.72832,2.078-.6545,2.80634,.16457s.65448,2.078-.16458,2.80634v-.00002Z" fill="#0f0671"></path>
+                                <path d="M355.32916,199.54288l-19.31085,17.17137c-.81906,.72832-2.078,.6545-2.80634-.16457s-.65448-2.078,.16458-2.80634l19.31085-17.17137c.81906-.72832,2.078-.6545,2.80634,.16457s.65448,2.078-.16458,2.80634Z" fill="#0f0671"></path>
+                            </g>
+                            <g>
+                                <path d="M114.29526,329.69291h-31.3623c-4.03564,0-7.31885-3.2832-7.31885-7.31885v-35.3623c0-4.03564,3.2832-7.31885,7.31885-7.31885h31.3623c4.03564,0,7.31885,3.2832,7.31885,7.31885v35.3623c0,4.03564-3.2832,7.31885-7.31885,7.31885Z" fill="#fff"></path>
+                                <path d="M114.29526,329.69291h-31.3623c-4.03564,0-7.31886-3.2832-7.31886-7.31885-2.78049-11.65225-2.54993-23.45087,0-35.3623,0-4.03564,3.28322-7.31885,7.31886-7.31885h31.3623c4.03564,0,7.31885,3.2832,7.31885,7.31885v35.3623c0,4.03564-3.2832,7.31885-7.31885,7.31885Zm-31.3623-49c-3.48438,0-6.31885,2.83447-6.31885,6.31885v35.3623c0,3.48438,2.83447,6.31885,6.31885,6.31885h31.3623c3.48438,0,6.31885-2.83447,6.31885-6.31885v-35.3623c0-3.48438-2.83447-6.31885-6.31885-6.31885h-31.3623Z" fill="#3f3d56"></path>
+                                <path d="M111.12632,301.19291h-25.84116c-1.09605,0-1.98778-.89175-1.98778-1.98779s.89174-1.98779,1.98778-1.98779h25.84116c1.09605,0,1.98778,.89175,1.98778,1.98779s-.89174,1.98779-1.98777,1.98779Z" fill="#0f0671"></path>
+                            </g>
+                        </svg>
                     </div>
+                    <h4 class="text-center">Outcome Output Monitoring Format (OOMF) page is under development</h4>
                 </div>
-                <div class="selected-goal-text-wrapper" data-selected-goal-color="0">
-                    <div class="selected-goal-text-area">
-                        <h4>Overall SDG India Index - Comparison</h4>
-                    </div>
-                </div>
-                <div class="comparison-stats-wrapper">
-                    <div class="comparison-stats-grid">
-                        <div class="comparison-stats-grid-item">
-                            <div class="comparison-stats-card">
-                                <span class="comp-title">India</span>
-                                <span class="comp-value">54</span>
-                            </div>
-                        </div>
-                        <div class="comparison-stats-grid-item">
-                            <div class="comparison-stats-card">
-                                <span class="comp-title">J&K</span>
-                                <span class="comp-value">31</span>
-                            </div>
-                        </div>
-                        <div class="comparison-stats-grid-item">
-                            <div class="comparison-stats-card">
-                                <span class="comp-title">Kerala</span>
-                                <span class="comp-value">72</span>
-                                <span class="comp-highlight">Best Performing State</span>
-                            </div>
-                        </div>
-                        <div class="comparison-stats-grid-item">
-                            <div class="comparison-stats-card">
-                                <span class="comp-title">Chandigarh</span>
-                                <span class="comp-value">65</span>
-                                <span class="comp-highlight">Best Performing UT</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="graph-section">
-                <div class="graph-wrapper">
-                    <div id="comparison-graph" style="height: 400px;"></div>
-                    <div class="gws-chart-area">
-                        <div class="color-indicator-charts mt-3">
-                            <div class="color-indicator__item">
-                                <div class="ci__color ci__color-skyblue"></div>
-                                <div class="ci__title">Achiever (100)</div>
-                            </div>
-                            <div class="color-indicator__item">
-                                <div class="ci__color ci__color-green"></div>
-                                <div class="ci__title">Front Runner (65 - 99)</div>
-                            </div>
-                            <div class="color-indicator__item">
-                                <div class="ci__color ci__color-yellow"></div>
-                                <div class="ci__title">Performer (50 - 64)</div>
-                            </div>
-                            <div class="color-indicator__item">
-                                <div class="ci__color ci__color-red"></div>
-                                <div class="ci__title">Aspirant (0 - 49)</div>
-                            </div>
-                            <div class="color-indicator__item">
-                                <div class="ci__color ci__color-grey"></div>
-                                <div class="ci__title">Information Unavailable</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section class="comparison-table-section">
-                <div class="comparison-table-wrapper">
-                    <div class="table-responsive">
-                        <table class="table cs-table-2 cs-table-sticky-header table-striped mb-0 text-center" role="grid">
-                            <colgroup>
-                                <col style="">
-                                <col style="min-width: 132px">
-                                <col style="min-width: 134px">
-                                <col style="min-width: 220px">
-                                <col style="min-width: 220px">
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th>Financial Years</th>
-                                    <th>India Score</th>
-                                    <th>J & K Score</th>
-                                    <th>Best Performing State Scores</th>
-                                    <th>Best Performing States</th>
-                                    <th>Best Performing UT Scores</th>
-                                    <th>Best Performing UT</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#excelModal">2023-24</a>
-                                    </td>
-                                    <td>54 <img src="assets/images/arrow-up.svg"></td>
-                                    <td>31 <img src="assets/images/arrow-down.svg"></td>
-                                    <td>72</td>
-                                    <td>Kerala</td>
-                                    <td>56</td>
-                                    <td>Chandigarh</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#excelModal">2022-23</a>
-                                    </td>
-                                    <td>40 <img src="assets/images/arrow-down.svg"></td>
-                                    <td>55 <img src="assets/images/arrow-up.svg"></td>
-                                    <td>94</td>
-                                    <td>Assam</td>
-                                    <td>89</td>
-                                    <td>Jammu and Kashmir</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#excelModal">2021-22</a>
-                                    </td>
-                                    <td>54 <img src="assets/images/arrow-up.svg"></td>
-                                    <td>31 <img src="assets/images/arrow-down.svg"></td>
-                                    <td>72</td>
-                                    <td>Gujarat</td>
-                                    <td>68</td>
-                                    <td>Ladakh</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#excelModal">2020-21</a>
-                                    </td>
-                                    <td>54 <img src="assets/images/arrow-up.svg"></td>
-                                    <td>31 <img src="assets/images/arrow-down.svg"></td>
-                                    <td>72</td>
-                                    <td>Haryana</td>
-                                    <td>70</td>
-                                    <td>Lakshadweep</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+            </div>
         </main>
         <footer class="cs-footer">
             <div class="cs-footer-wrapper">
                 Copyrights © 2024 All Rights Reserved
             </div>
         </footer>
-    </div>
-    <div class="sticky-goals-filter hide-filter">
-        <div class="goals-scale-wrapper">
-            <div class="goals-scale-area" data-goals-scale="">
-                <img data-goal-btn="0" role="button" src="sdg-wheel.png" alt="All Goals" class="active">
-                <img data-goal-btn="1" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_1.jpg" alt="No Poverty">
-                <img data-goal-btn="2" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_2.jpg" alt="Zero Hunger">
-                <img data-goal-btn="3" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_3.jpg" alt="Good Health &amp; Well-Being">
-                <img data-goal-btn="4" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_4.jpg" alt="Quality Education">
-                <img data-goal-btn="5" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_5.jpg" alt="Gender Equality">
-                <img data-goal-btn="6" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_6.jpg" alt="Clean Water &amp; Sanitation">
-                <img data-goal-btn="7" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_7.jpg" alt="Affordable &amp; Clean Energy">
-                <img data-goal-btn="8" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_8.jpg" alt="Decent Work &amp; Economic Growth">
-                <img data-goal-btn="9" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_9.jpg" alt="Industry, Innovation &amp; Infrastructure">
-                <img data-goal-btn="10" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_10.jpg" alt="Reduced Inequalities">
-                <img data-goal-btn="11" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_11.jpg" alt="Sustainable Cities and Communities">
-                <img data-goal-btn="12" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_12.jpg" alt="Responsible Consumption and Production">
-                <img data-goal-btn="13" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_13.jpg" alt="Climate Action">
-                <img data-goal-btn="15" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_15.jpg" alt="Life on Land">
-                <img data-goal-btn="16" role="button" src="http://159.89.166.77/sdg_jk/assets/images/goals/goal_16.jpg" alt="Peace, Justice and Strong Institutions">
-            </div>
-        </div>
     </div>
     <div class="modal fade" id="sidebarMenu" tabindex="-1" aria-labelledby="sidebarMenuLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
@@ -341,7 +232,7 @@
                         url: "http://159.89.166.77/sdg_jk/public-dashboard/division-district-goal-indicators",
                         type: 'POST',
                         data: {
-                            _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                            _token: '09f57iD7JGRngN0U9vjSkhsURyStlLcPDsLlmVsD',
                             dif_year: dif_year,
                             goal_id: goal_id,
                             district_id: district_id
@@ -400,7 +291,7 @@
                         url: "http://159.89.166.77/sdg_jk/public-dashboard/goal-indicator-data",
                         type: 'POST',
                         data: {
-                            _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                            _token: '09f57iD7JGRngN0U9vjSkhsURyStlLcPDsLlmVsD',
                             goal_id: goal_id,
                             year: year,
                             utif_year: utif_years
@@ -429,7 +320,7 @@
                         url: "http://159.89.166.77/sdg_jk/public-dashboard/goal-indicator-data",
                         type: 'POST',
                         data: {
-                            _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                            _token: '09f57iD7JGRngN0U9vjSkhsURyStlLcPDsLlmVsD',
                             goal_id: goal_id,
                             utif_year: utif_years,
                             year: dif_year
@@ -1037,23 +928,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="excelModal" tabindex="-1" aria-labelledby="excelModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="excelModalLabel">Overall Comparison - 2023-2024</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div id="excelContent" class="overflow-auto"></div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-    </div>
-
     <!-- Library Bundle Script -->
     <script src="http://159.89.166.77/sdg_jk/assets/js/core/libs.min.js"></script>
 
@@ -1091,7 +965,7 @@
                     url: "http://159.89.166.77/sdg_jk/public-dashboard/district-sdg-score-for-goal",
                     type: 'POST',
                     data: {
-                        _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                        _token: '09f57iD7JGRngN0U9vjSkhsURyStlLcPDsLlmVsD',
                         goal_id: goalId,
                         district_id: districtId
                     },
@@ -1116,7 +990,7 @@
                 url: "http://159.89.166.77/sdg_jk/public-dashboard/district-indicators-for-year",
                 type: 'POST',
                 data: {
-                    _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                    _token: '09f57iD7JGRngN0U9vjSkhsURyStlLcPDsLlmVsD',
                     year: year,
                     district_id: districtId
                 },
@@ -1141,7 +1015,7 @@
                 url: "http://159.89.166.77/sdg_jk/public-dashboard/goal-indicator-data",
                 type: 'POST',
                 data: {
-                    _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                    _token: '09f57iD7JGRngN0U9vjSkhsURyStlLcPDsLlmVsD',
                     goal_id: goalID,
                     year: defaultYear
                 },
@@ -1164,7 +1038,7 @@
                 url: "http://159.89.166.77/sdg_jk/public-dashboard/division-district-goals",
                 type: 'POST',
                 data: {
-                    _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                    _token: '09f57iD7JGRngN0U9vjSkhsURyStlLcPDsLlmVsD',
                     district_id: districtId,
                     year: defaultYear
                 },
@@ -1187,7 +1061,7 @@
                 url: "http://159.89.166.77/sdg_jk/public-dashboard/division-district-goal-indicators",
                 type: 'POST',
                 data: {
-                    _token: 'lHYMivyaacUagiOUsf9e6fu7X8puwS2BaxWqG8Pm',
+                    _token: '09f57iD7JGRngN0U9vjSkhsURyStlLcPDsLlmVsD',
                     goal_id: goalId,
                     district_id: districtId
                 },
@@ -1314,8 +1188,6 @@
 
         })();
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
-    <script src="comparison.js"></script>
 </body>
 
 </html>
